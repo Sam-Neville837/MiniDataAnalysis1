@@ -34,7 +34,7 @@ library(diversedata)
 library(moderndive)
 #--- Add any other packages below this line ---#
 
-
+library(diversedatahub)
 ```
 
 
@@ -75,8 +75,7 @@ Out of the 5 data sets listed above, choose **2** that appeal to you based on th
 
 1: hcmst
 
-2: coffee cencus
-
+2: wildfire
 
 <!----------------------------------------------------------------------------->
 
@@ -93,24 +92,39 @@ hcmst |>
     ggplot(aes(x=flirts_with_partner, fill=married)) +
     geom_bar() +
     coord_flip()
+
+hcmst |>
+    ggplot(aes(x=fights_with_partner, fill=married)) +
+    geom_bar() +
+    coord_flip()
+
+hcmst |>
+    ggplot(aes(x=relationship_quality, fill=married)) +
+    geom_bar()
+
+glimpse(hcmst)
 ```
 
-
-Write your findings here.
-
-
+For this part I explored three variables in the hcmst data set: flirts_with_partner, fights_with_partner, and relationship quality. And in all of these I used married or not married as the fill. For flirts_with_partner I found that never or a few times a week were the most common results and that in general there was not a huge difference between couples that were married vs not married (though there was more data on married couples vs non married couples). For fights tih partner the most common results by far was 0 times and the amount that couples fought was about even betweeen married and none married couples. Finally relationship quality, excellent or good were by far the most common resutls and there were very few results in very poor. For all of these statistics that I explored it is worth considering that these are subjective reporting and there is nuance in what people report. For instance, what does someone define as a fight vs an argument? And what exaclty counts as flirting?
 
 
 #### Data Set 2
 ```{r}
-### Explore 3 variables of data set 2 ###
+wildfire |>
+    ggplot(aes(x=fire_origin)) +
+    geom_bar() +
+    coord_flip()
 
+wildfire |>
+    ggplot(aes(x=fire_type, y=fire_spread_rate)) +
+    geom_boxplot()
+
+wildfire |>
+    ggplot(aes(x=wind_speed, y=fire_spread_rate)) +
+    geom_point(alpha=.3)
 ```
 
-Write your findings here.
-
-
-
+For the wildfires data set i explored the fire_prigin, fire types vs fire_spread_rate, and wind_speed vs fire_spread_rate. Fire fire origin it seemed like FPD staff and HAC were the most common. For fire_type vs fire_spread_rate I was surprised to see that for all fire types the median spread was pretty low however Crown fires had the highest median spread rate as well as a good number of outliers and Surface fires had the most dramatic outliers with the highest indiviual spread rate. Finally with wind_speed vs spread rate I was even more surprised to find that the higher the wind speed the slower the fire tended to spread. The fastest spread rate was at a very low windspeed and the high windspeed fires were some of the slowest spreading fires.
 
 <!----------------------------------------------------------------------------->
 
@@ -126,7 +140,7 @@ It's time to choose only one data set. State the data set that you've chosen, an
 
 <!-------------------------- Start your work below ---------------------------->
 
-
+hcmst. I chose this one because I am personally more intersted in learning about it and there is more practrical stuff that can be learned from it.
 
 <!----------------------------------------------------------------------------->
 
@@ -141,8 +155,7 @@ Write your research questions **as questions**, and be specific. You can change 
 
 <!-------------------------- Start your work below ---------------------------->
 
-
-
+The question that I want to answer is what factors most positively and negativbely affect relationship quality. My secondary question is if disagreements/fights are corelated with relationship and individual age, ie if fights get more or less common as time goes on
 
 <!----------------------------------------------------------------------------->
 
