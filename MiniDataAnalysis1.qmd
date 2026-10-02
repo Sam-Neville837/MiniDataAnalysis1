@@ -180,8 +180,17 @@ Your task is to create a table that calculates the proportion of missing values 
 <!-------------------------- Start your work below ---------------------------->
 
 ```{r}
-### Explore missingness here ###
+missing_per_var <- hcmst |>
+    pivot_longer(cols = everything(),
+    names_to = "vars",
+    values_to = "values",
+    values_transform = as.character) |>
+    group_by(vars) |>
+    summarise(perc_missing = mean(is.na(values))) |>
+    filter(perc_missing != 0) |>
+    arrange(desc(perc_missing))
 
+missing_per_var
 ```
 
 
@@ -205,8 +214,12 @@ If missingness is not an issue, describe why.
 
 <!-------------------------- Start your work below ---------------------------->
 
-
-
+```{r}
+missing_per_var |>
+    mutate(perc_missing = perc_missing * 100) |>
+    filter(perc_missing >= 20)
+```
+This will not present an issue since when I run the code chunk above there is nothing output. Not only are no variables of interest not missing more than 20%, no variables at all are missing >=20%
 
 <!----------------------------------------------------------------------------->
 
@@ -231,10 +244,10 @@ Show the first 6 rows of the tidied data.
 
 <!-------------------------- Start your work below ---------------------------->
 ```{r}
-
-
-
-
+hcmst_clean <- hcmst |>
+    select(subject_age, subject_sex, subject_income_category, subject_employment_status, married, sex_frequency, flirts_with_partner, fights_with_partner, relationship_duration, children, agree_covid_approach, relationship_quality) |> #select relevant columns
+    mutate(yn_children = children > 0) #create a column with true for has children and false for none
+hcmst_clean
 ```
 
 <!----------------------------------------------------------------------------->
@@ -248,10 +261,17 @@ Show the outputted table.
 
 <!-------------------------- Start your work below ---------------------------->
 ```{r}
+hcmst_summary <- hcmst_clean |>
+    select(subject_age, relationship_duration, children) |>
+    pivot_longer(cols = everything(),
+    names_to = "vars",
+    values_to = "values") |>
+    group_by(vars) |>
+    summarise(mean = mean(values, na.rm=TRUE),
+            min = min(values, na.rm=TRUE),
+            max=max(values, na.rm=TRUE))
 
-
-
-
+hcmst_summary
 ```
 
 <!----------------------------------------------------------------------------->
