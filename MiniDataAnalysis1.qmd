@@ -369,7 +369,7 @@ All output on GitHub is readable, recent and relevant:
 
 # Step 4: Submission
 
-** Submit repo link **
+https://github.com/Sam-Neville837/MiniDataAnalysis1
 
 To submit this milestone, submit the github link to the repo. 
 
