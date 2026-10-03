@@ -518,9 +518,9 @@ Here is an example of a specific, explicit debug:
 Generative AI (through [LIST MODELS USED, i.e. ChatGPT, CoPilot)] was used to
 help me complete  this assignment in the following ways.
 
-1. [Describe here]
+1. To explain how to do the github things we learned in class in the github cli
 
-2. [Describe here]
+2. when creating the missing_person_per_var dataset it didn't work and after finding errors (such as spelling mistakes) myself it still wasn't working and i used claude to help me find that I needed to add as.character
 
 ...
 
