@@ -1,7 +1,7 @@
 ---
 title: "Mini Data-Analysis: Deliverable 1"
 format: gfm
-author: "Your name here"
+author: "Sam Neville"
 ---
 
 Total points available: 74
@@ -32,9 +32,6 @@ Typically, R Packages are loaded in at the very beginning of the analysis. If yo
 library(tidyverse)
 library(diversedata)
 library(moderndive)
-#--- Add any other packages below this line ---#
-
-library(diversedatahub)
 ```
 
 
@@ -89,47 +86,49 @@ One way to narrowing down your selection is to *explore* the data sets. Use your
 #### Data Set 1
 ```{r}
 hcmst |>
-    ggplot(aes(x=flirts_with_partner, fill=married)) +
+    ggplot(aes(x=flirts_with_partner)) +
     geom_bar() +
     coord_flip()
 
 hcmst |>
-    ggplot(aes(x=fights_with_partner, fill=married)) +
-    geom_bar() +
-    coord_flip()
+    summarise(kids_mean=mean(children))
 
 hcmst |>
-    ggplot(aes(x=relationship_quality, fill=married)) +
+    ggplot(aes(x=relationship_quality)) +
     geom_bar()
-
-glimpse(hcmst)
 ```
 
-For this part I explored three variables in the hcmst data set: flirts_with_partner, fights_with_partner, and relationship quality. And in all of these I used married or not married as the fill. For flirts_with_partner I found that never or a few times a week were the most common results and that in general there was not a huge difference between couples that were married vs not married (though there was more data on married couples vs non married couples). For fights tih partner the most common results by far was 0 times and the amount that couples fought was about even betweeen married and none married couples. Finally relationship quality, excellent or good were by far the most common resutls and there were very few results in very poor. For all of these statistics that I explored it is worth considering that these are subjective reporting and there is nuance in what people report. For instance, what does someone define as a fight vs an argument? And what exaclty counts as flirting?
+**flirts_with_partner:** I found that there were 6 levels (plus NA): never, less_than_once_a_month, 1_to_3_times_a_month, once_a_week, a_few_times_a_week, and every_day
+
+**children:** I found that the mean number or children was 2.55
+
+**relationship_quality:** I found there were 5 levels: very_poor, poor, fair, good, and excellent
 
 
 #### Data Set 2
 ```{r}
 wildfire |>
-    ggplot(aes(x=fire_origin)) +
-    geom_bar() +
-    coord_flip()
+    group_by(wind_direction) |>
+    summarise(number=n()) |>
+    arrange(desc(number))
 
 wildfire |>
-    ggplot(aes(x=fire_type, y=fire_spread_rate)) +
-    geom_boxplot()
+    ggplot(aes(x=fire_type)) +
+    geom_bar()
 
 wildfire |>
-    ggplot(aes(x=wind_speed, y=fire_spread_rate)) +
-    geom_point(alpha=.3)
+    summarise(mean=mean(wind_speed, na.rm=TRUE))
 ```
 
-For the wildfires data set i explored the fire_prigin, fire types vs fire_spread_rate, and wind_speed vs fire_spread_rate. Fire fire origin it seemed like FPD staff and HAC were the most common. For fire_type vs fire_spread_rate I was surprised to see that for all fire types the median spread was pretty low however Crown fires had the highest median spread rate as well as a good number of outliers and Surface fires had the most dramatic outliers with the highest indiviual spread rate. Finally with wind_speed vs spread rate I was even more surprised to find that the higher the wind speed the slower the fire tended to spread. The fastest spread rate was at a very low windspeed and the high windspeed fires were some of the slowest spreading fires.
+**
 
 <!----------------------------------------------------------------------------->
 
+**wind_direction** I found that there were a number of wind direction (more than I was expecting) and that the most common wind direction was West
 
+**fire_type** I found that there were 4 types of fires (plus NA): Crown, Ground, Surface, and Unknown
 
+**wind_speed** I found that the average wind speed was 8.86 mph
 
 
 
@@ -140,7 +139,7 @@ It's time to choose only one data set. State the data set that you've chosen, an
 
 <!-------------------------- Start your work below ---------------------------->
 
-hcmst. I chose this one because I am personally more intersted in learning about it and there is more practrical stuff that can be learned from it.
+hcmst. I chose this one because I am more intersted in learning about relationship data than about wildfires, and there is, for me, more practical use for what I would learn from it than from the wildfires dataset
 
 <!----------------------------------------------------------------------------->
 
@@ -155,7 +154,7 @@ Write your research questions **as questions**, and be specific. You can change 
 
 <!-------------------------- Start your work below ---------------------------->
 
-The question that I want to answer is what factors most positively and negativbely affect relationship quality. My secondary question is if disagreements/fights are corelated with relationship and individual age, ie if fights get more or less common as time goes on
+The question that I want to answer is what factors most positively and negatively affect relationship quality. My secondary question is if disagreements/fights are corelated with relationship and individual age, ie if fights get more or less common as time goes on
 
 <!----------------------------------------------------------------------------->
 
@@ -216,8 +215,8 @@ If missingness is not an issue, describe why.
 
 ```{r}
 missing_per_var |>
-    mutate(perc_missing = perc_missing * 100) |>
-    filter(perc_missing >= 20)
+    mutate(perc_missing=perc_missing * 100) |>
+    filter(perc_missing >=20)
 ```
 This will not present an issue since when I run the code chunk above there is nothing output. Not only are no variables of interest not missing more than 20%, no variables at all are missing >=20%
 
@@ -336,9 +335,9 @@ Here is an example of a specific, explicit debug:
 Generative AI (through [LIST MODELS USED, i.e. ChatGPT, CoPilot)] was used to
 help me complete  this assignment in the following ways.
 
-1. [Describe here]
+1. To explain how to do the github things we learned in class in the github cli
 
-2. [Describe here]
+2. when creating the missing_person_per_var dataset it didn't work and after finding errors (such as spelling mistakes) myself it still wasn't working and i used claude to help me find that I needed to add as.character
 
 ...
 
